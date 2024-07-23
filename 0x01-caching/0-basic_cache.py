@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Create a class BasicCache that inherits from BaseCaching and is a caching system:
+Create a class BasicCache that inherits from BaseCaching and is
+a caching system:
 
 You must use self.cache_data - dictionary from the parent class BaseCaching
 This caching system doesn’t have limit
@@ -13,6 +14,7 @@ If key is None or if the key doesn’t exist in self.cache_data, return None.
 """
 
 from base_caching import BaseCaching
+
 
 class BasicCache(BaseCaching):
     """ """
@@ -27,5 +29,3 @@ class BasicCache(BaseCaching):
             return self.cache_data[key]
         else:
             return None
-
-
