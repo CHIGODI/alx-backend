@@ -1,4 +1,4 @@
-#!/usr/bin/env pyhon3
+#!/usr/bin/env python3
 """
 Create a class LRUCache that inherits from BaseCaching and is a caching system:
 """
@@ -6,28 +6,29 @@ Create a class LRUCache that inherits from BaseCaching and is a caching system:
 from base_caching import BaseCaching
 from collections import OrderedDict
 
-
 class LRUCache(BaseCaching):
-    """ LLRUCache """
+    """ LRUCache using the Least Recently Used caching algorithm """
+
     def __init__(self):
         super().__init__()
-        self.cache_data = OrderedDict()
+        self.cache_data = OrderedDict()  # Use OrderedDict to maintain access order
 
     def put(self, key, item):
         """Add an item to the cache."""
         if key is not None and item is not None:
             if key in self.cache_data:
-                # IF the key exists move it to the end as
-                # the recntly accessed
+                # Update item and move it to the end to mark it as recently used
                 self.cache_data.move_to_end(key)
             self.cache_data[key] = item
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                oldest_key, oldest_item = self.cache_data.popitem(last=False)
+                # Pop the oldest item (least recently used)
+                oldest_key, _ = self.cache_data.popitem(last=False)
                 print(f'DISCARD: {oldest_key}')
 
     def get(self, key):
-        """ get key from cache """
-        if key in self.cache_data and key is not None:
+        """Retrieve an item from the cache."""
+        if key is not None and key in self.cache_data:
+            # Move the accessed item to the end to mark it as recently used
+            self.cache_data.move_to_end(key)
             return self.cache_data[key]
-        else:
-            return None
+        return None
