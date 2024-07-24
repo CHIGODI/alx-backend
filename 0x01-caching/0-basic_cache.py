@@ -17,7 +17,7 @@ from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
-    """ """
+    """ Add data to cache """
     def put(self, key, item):
         """ Adds data to cache """
         if key is not None and item is not None:
