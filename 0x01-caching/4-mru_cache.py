@@ -22,11 +22,10 @@ class MRUCache(BaseCaching):
         if key is not None and item is not None:
             if key in self.cache_data:
                 self.cache_data.move_to_end(key)
-            self.cache_data[key] = item
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                # Pop the most recently used item (last item)
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 most_recent_key, _ = self.cache_data.popitem(last=True)
                 print(f'DISCARD: {most_recent_key}')
+            self.cache_data[key] = item
 
     def get(self, key):
         """Retrieve an item from the cache."""
