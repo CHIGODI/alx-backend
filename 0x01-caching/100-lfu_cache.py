@@ -25,6 +25,7 @@ class LFUCache(BaseCaching):
     def __init__(self):
         """ Init """
         super().__init__()
+        self.cache_data = OrderedDict()
         self.frequency = defaultdict(int)
         self.freq_items = defaultdict(OrderedDict)
 
@@ -61,21 +62,18 @@ class LFUCache(BaseCaching):
 
         return value
 
-    def put(self, key, value):
+    def put(self, key, item):
         """Add an item to the cache."""
-        if BaseCaching.MAX_ITEMS == 0:
+        if key is None or item is None:
             return
 
         if key in self.cache_data:
-            # Update the value and move to the next frequency list
-            self.cache_data[key] = value
-            self.get(key)  # reuse the get method to update frequency
+            # Update the item and its frequency
+            self.cache_data[key] = item
+            self.get(key)  # To update the frequency
         else:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                # Evict the least frequently used item
                 self._evict_lfu()
-
-            # Add the new item to the cache and frequency lists
-            self.cache_data[key] = value
+            self.cache_data[key] = item
             self.frequency[key] = 1
-            self.freq_items[1][key] = value
+            self.freq_items[1][key] = item
