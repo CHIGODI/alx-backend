@@ -31,6 +31,7 @@ class LFUCache(BaseCaching):
         # If the frequency list is empty, remove it
         if not self.freq_items[min_freq]:
             del self.freq_items[min_freq]
+        return evict_key
 
     def get(self, key):
         """Retrieve an item from the cache."""
@@ -63,7 +64,8 @@ class LFUCache(BaseCaching):
             self.get(key)  # To update the frequency
         else:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-                self._evict_lfu()
+                evict_key = self._evict_lfu()
+                print(f'DISCARD: {evict_key}')
             self.cache_data[key] = item
             self.frequency[key] = 1
             self.freq_items[1][key] = item
