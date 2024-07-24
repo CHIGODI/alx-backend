@@ -10,6 +10,7 @@ class LRUCache(BaseCaching):
     """ LRUCache using the Least Recently Used caching algorithm """
 
     def __init__(self):
+        """ Init """
         super().__init__()
         self.cache_data = OrderedDict()  # Use OrderedDict to maintain access order
 
