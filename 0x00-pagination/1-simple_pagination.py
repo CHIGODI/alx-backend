@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """
+pagination
 """
 
 import csv
 import math
 from typing import List
 
+
 def index_range(page, page_size):
     """
+    index range
     """
     start_index = (page - 1) * page_size
     end_index = start_index + page_size
@@ -17,7 +20,7 @@ def index_range(page, page_size):
 class Server:
     """Server class to paginate a database of popular baby names.
     """
-    DATA_FILE = "Popular_Baby_Names.csv"
+    DATA_FILE = "Popular_Baby_Names.CSV"
 
     def __init__(self):
         self.__dataset = None
