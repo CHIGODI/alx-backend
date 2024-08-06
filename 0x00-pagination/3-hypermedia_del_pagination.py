@@ -39,20 +39,29 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = None, page_size: int = 2) -> Dict:
-        """hyper index"""
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+        """Returns a dictionary containing the hypermedia
+        pagination information."""
         data = self.indexed_dataset()
         start = 0 if index is None else index
         assert data is not None
-        data = []
-        for x in range(page_size):
-            data.append(self.indexed_dataset().get(x))
+
+        data_ = []
+        current_index = start
+
+        while len(data_) < page_size and current_index < len(data):
+            item = data.get(current_index)
+            if item is not None:
+                data_.append(item)
+            current_index += 1
+
+        next_index = current_index if current_index < len(data) else None
 
         hyper_index_dict = {
             "index": start,
-            "next_index":  start + page_size,
-            "page_size": page_size,
-            "data": data,
+            "next_index": next_index,
+            "page_size": len(data_),
+            "data": data_,
         }
-        print(self.indexed_dataset())
+
         return hyper_index_dict
